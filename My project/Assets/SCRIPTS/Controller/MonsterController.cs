@@ -12,7 +12,7 @@ public class MonsterController : MonoBehaviour
 
         if(Monster_hp <= 0)
         {
-                         GameObject temp = this.gameObject;                   
+             GameObject temp = this.gameObject;                   
              Destroy(temp);
          }
     }
