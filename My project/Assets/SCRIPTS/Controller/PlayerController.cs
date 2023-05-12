@@ -9,6 +9,19 @@ public class PlayerController : MonoBehaviour
     Camera viewCamera;                                      //카메라 정보 값을 가져오기 위해 선언
     Vector3 velocity;                                       //이동 방향 벡터 값 선언
     public ProjectileController projectileController;       //발사컨트롤 클래스 접근
+
+    public int Player_hp = 20;
+
+    public void Player_Damaged(int damage)
+    {
+        Player_hp -= damage;
+
+        if (Player_hp <= 0)
+        {
+            GameObject temp = this.gameObject;
+            Destroy(temp);
+        }
+    }
     // Start is called before the first frame update
     void Start()
     {

@@ -1,12 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class ProjectileMove : MonoBehaviour
 {
     public Vector3 launchDirection;                     //발사체 방향성 선언
 
+    public enum BULLETTYPE
+    {
+        PLAYER,
+        ENEMY
+    }
 
+    public BULLETTYPE bulletType = BULLETTYPE.PLAYER;
 
     private void FixedUpdate()                          //이동 관련 함수
     {
@@ -49,9 +56,18 @@ public class ProjectileMove : MonoBehaviour
         }
 
 
-        if (other.gameObject.tag == "Monster")
+        if (other.gameObject.tag == "Monster" && bulletType == BULLETTYPE.PLAYER)               //몬스터와 충돌이 일어났을 때
         {
             other.gameObject.GetComponent<MonsterController>().Monster_Damaged(1);
+            other.gameObject.transform.DOPunchScale(new Vector3(0.5f, 0.5f, 0.5f), 0.1f, 10, 1);
+            GameObject temp = this.gameObject;
+            Destroy(temp);
+        }
+
+        if (other.gameObject.tag == "Player" && bulletType == BULLETTYPE.ENEMY)
+        {
+            other.gameObject.GetComponent<PlayerController>().Player_Damaged(1);
+            //other.gameObject.transform.DOPunchScale(new Vector3(0.5f, 0.5f, 0.5f), 0.1f, 10, 1);
             GameObject temp = this.gameObject;
             Destroy(temp);
         }
